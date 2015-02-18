@@ -22,7 +22,7 @@ Even the icons inside won't look blurry in retina devices. And above all? More a
 
 For detailed instruction and video tutorial, please visit the <a href="https://duogeek.com/products/plugins/wordpress-simple-image-gallery/">plugin page</a>.
 
-For any issues, problem or query, please feel free to <aa href="https://duogeek.com/contact/">contact us</a>.
+For any issues, problem or query, please feel free to <a href="https://duogeek.com/contact/">contact us</a>.
 
 
 **Features**
