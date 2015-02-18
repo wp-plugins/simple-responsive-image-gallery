@@ -1,5 +1,5 @@
-=== Plugin Name ===
-Contributors: DuoGeek
+=== Simple Image Gallery ===
+Contributors: duogeek
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VZB6MW3L4F526
 Tags: simple, image, gallery, beautiful, awesome, easy, wordpress, photo
 Requires at least: 3.5
@@ -19,6 +19,10 @@ In Simple Image Gallery, you can create multiple image gallries. You can easily 
 Simple Image Gallery has lots of awesome features. For example, if you visit your site from touch-screen devices, you can swipe through your images by swiping your finger over the screen. If you are browsing in your desktop, you can use keyboard navigation for browsing through the images.
 
 Even the icons inside won't look blurry in retina devices. And above all? More awesome designs are coming in our next version.
+
+For detailed instruction and video tutorial, please visit the <a href="https://duogeek.com/products/plugins/wordpress-simple-image-gallery/">plugin page</a>.
+
+For any issues, problem or query, please feel free to <aa href="https://duogeek.com/contact/">contact us</a>.
 
 
 **Features**
