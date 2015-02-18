@@ -83,6 +83,9 @@ For any issues, problem or query, please feel free to <a href="https://duogeek.c
 == Screenshots ==
 1. Settings page
 2. Create gallery page
+3. Gallery view
+4. Gallery view
+5. Gallery view
 
 
 == Changelog ==
