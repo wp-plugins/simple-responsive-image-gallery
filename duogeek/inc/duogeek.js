@@ -13,9 +13,7 @@
     }
 
     if( $('.duo_prod_panel select').length ){
-        $('.duo_prod_panel select').selectize({
-            sortField: 'text'
-        });
+        $('.duo_prod_panel select').selectize();
     }
 
 

@@ -59,3 +59,7 @@ body{
 .dg_form table th{
     text-align: left;
 }
+
+.dg_form label{
+    line-height: 300%;
+}

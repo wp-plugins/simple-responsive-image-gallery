@@ -3,7 +3,7 @@
   Plugin Name: Simple Image Gallery
   Plugin URI: http://duogeek.com
   Description: Most Beautiful and Most Simple WordPress Image Gallery Plugin
-  Version: 1.0.1
+  Version: 1.0.2
   Author: DuoGeek
   Author URI: http://duogeek.com
   License: GPL v2 or later

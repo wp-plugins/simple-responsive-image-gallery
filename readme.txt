@@ -90,5 +90,8 @@ For any issues, problem or query, please feel free to <a href="https://duogeek.c
 
 == Changelog ==
 
+= 1.0.2 =
+* Minor Changes
+
 = 1.0.1 =
 * Initial release

@@ -117,6 +117,20 @@ if( ! class_exists( 'customPostType' ) ) {
 			register_taxonomy( $this->custom_tax['tax_name'], $this->custom_post_type['post_type'], $args );
 		}
 
+
+		public function add_custom_meta_boxes( $meta_boxes ) {
+			foreach( $meta_boxes as $meta_box ){
+				add_meta_box(
+					$meta_box['id'],
+					$meta_box['title'],
+					$meta_box['callback'],
+					$meta_box['post_type'],
+					$meta_box['context'],
+					$meta_box['priority']
+				);
+			}
+		}
+
 		
 		protected function get_terms_from_taxonomies( $taxonomies, $args = array() ){
 			return get_terms( $taxonomies, $args );
