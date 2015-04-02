@@ -63,3 +63,8 @@ body{
 .dg_form label{
     line-height: 300%;
 }
+
+.lisence_wrap {
+    background: none repeat scroll 0 0 #fff;
+    padding: 20px;
+}

@@ -116,9 +116,9 @@ if( ! class_exists( 'customPostType' ) ) {
 		
 			register_taxonomy( $this->custom_tax['tax_name'], $this->custom_post_type['post_type'], $args );
 		}
-
-
-		public function add_custom_meta_boxes( $meta_boxes ) {
+                
+                
+                public function add_custom_meta_boxes( $meta_boxes ) {
 			foreach( $meta_boxes as $meta_box ){
 				add_meta_box(
 					$meta_box['id'],
@@ -136,62 +136,6 @@ if( ! class_exists( 'customPostType' ) ) {
 			return get_terms( $taxonomies, $args );
 		}
 
-		public function post_list( $posts, $icon ){
-
-			$html = '';
-			$html .= '<div class="kb_post_list">';
-			$html .= '<ul class="list-unstyled">';
-			foreach( $posts as $post ){
-				$html .= '<li>';
-				$html .= '<div><i class="fa '. $icon .'"></i><a href="' . get_permalink( $post->ID ) . '">' . $post->post_title . '</a></div>';
-				$html .= $this->get_meta_for_kb( $post->ID );
-				$html .= '</li>';
-			}
-			$html .= '</ul>';
-			$html .= '</div>';
-
-			return $html;
-		}
-
-		public function get_meta_for_kb( $post_id ) {
-
-			$html = '';
-			$kb_help = get_post_meta( $post_id, 'kb_help', true );
-			$kb_unhelp = get_post_meta( $post_id, 'kb_unhelp', true );
-			$kb_count = get_post_meta( $post_id, 'kb_count', true );
-
-			if( ! isset( $kb_count ) ) $kb_count = 0;
-			if( ! isset( $kb_help ) || $kb_help == '' ) $kb_help = 0;
-			if( ! isset( $kb_unhelp ) || $kb_unhelp == '' ) $kb_unhelp = 0;
-
-			$html .= '<div class="kb_meta_list">';
-			$html .= '<span><i class="fa fa-eye"></i> ' . $kb_count . '</span>';
-			$html .= ' <span><i class="fa fa-thumbs-up"></i> ' . $kb_help . '</span>';
-			$html .= ' <span><i class="fa fa-thumbs-down"></i> ' . $kb_unhelp . '</span>';
-			$html .= '</div>';
-
-			return $html;
-		}
-
-		public function tax_list( $taxes, $icon, $limit ){
-
-			$html = '';
-			$html .= '<div class="kb_post_list">';
-			$html .= '<ul class="list-unstyled">';
-			$i = 0;
-			foreach( $taxes as $tax ){
-				if( isset( $limit ) && $limit > 0 )
-					if( ++$i > $limit )
-						break;
-				$html .= '<li>';
-				$html .= '<div><i class="fa '. $icon .'"></i><a href="' . get_term_link( $tax ) . '">' . $tax->name . ' (' . $tax->count . ')</a></div>';
-				$html .= '</li>';
-			}
-			$html .= '</ul>';
-			$html .= '';
-
-			return $html;
-		}
 
 		public function get_tax_list( $taxonomies, $args = array() ){
 			$defaults = array(

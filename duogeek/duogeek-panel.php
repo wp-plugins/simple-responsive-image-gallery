@@ -10,6 +10,7 @@ if( ! defined( 'DUO_PLUGIN_DIR' ) ) define( 'DUO_PLUGIN_DIR', plugin_dir_path( _
 if( ! defined( 'DUO_MENU_POSITION' ) ) define( 'DUO_MENU_POSITION', '38' );
 if( ! defined( 'DUO_PANEL_SLUG' ) ) define( 'DUO_PANEL_SLUG', 'duogeek-panel' );
 if( ! defined( 'DUO_HELP_SLUG' ) ) define( 'DUO_HELP_SLUG', 'duogeek-panel-help' );
+if( ! defined( 'DUO_LICENSES_SLUG' ) ) define( 'DUO_LICENSES_SLUG', 'duogeek-pro-licenses' );
 if( ! defined( 'DUO_VERSION' ) ) define( 'DUO_VERSION', '1.1' );
 
 
@@ -42,6 +43,10 @@ if( ! class_exists( 'DuoGeekPlugins' ) ){
             add_action( 'admin_menu', array( $this, 'register_duogeek_submenu_page' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles_scripts' ) );
             add_action( 'wp_enqueue_scripts', array( $this, 'front_styles_scripts' ) );
+            add_action( 'wp_footer', array( $this, 'dg_equal_column' ) );
+
+            add_shortcode( 'dg_grid', array( $this, 'dg_grid_cb' ) );
+            add_shortcode( 'dg_grid_class', array( $this, 'dg_grid_class_cb' ) );
 
         }
 
@@ -54,6 +59,14 @@ if( ! class_exists( 'DuoGeekPlugins' ) ){
         public function admin_styles_scripts() {
 
             $styles = array(
+                array(
+                    'name' => 'sn-fontAwesome-css',
+                    'src' => '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css',
+                    'dep' => '',
+                    'version' => DUO_VERSION,
+                    'media' => 'all',
+                    'condition' => $this->DuoOptions['fontAwesome'] != 1
+                ),
                 array(
                     'name' => 'icheck-all',
                     'src' => DUO_PLUGIN_URI . 'duogeek/inc/icheck/skins/square/_all.css',
@@ -191,6 +204,14 @@ if( ! class_exists( 'DuoGeekPlugins' ) ){
                     'version' => DUO_VERSION,
                     'media' => 'all',
                     'condition' => $this->DuoOptions['animate'] != 1
+                ),
+                array(
+                    'name' => 'dg-grid-css',
+                    'src' => DUO_PLUGIN_URI . 'duogeek/inc/dg-grid.css',
+                    'dep' => '',
+                    'version' => DUO_VERSION,
+                    'media' => 'all',
+                    'condition' => true
                 )
             );
 
@@ -330,8 +351,9 @@ if( ! class_exists( 'DuoGeekPlugins' ) ){
             }
 
             add_submenu_page( DUO_PANEL_SLUG, __( 'Help', 'dp' ), __( 'Help', 'dp' ), 'manage_options', DUO_HELP_SLUG, array( $this, 'duogeek_panel_help_cb' ) );
-        }
 
+            add_submenu_page( DUO_PANEL_SLUG, __( 'Licenses', 'dp' ), __( 'Licenses', 'dp' ), 'manage_options', DUO_LICENSES_SLUG, array( $this, 'duogeek_panel_licenses_cb' ) );
+        }
 
 
         public function duogeek_panel_help_cb() {
@@ -432,6 +454,91 @@ if( ! class_exists( 'DuoGeekPlugins' ) ){
                 <?php } ?>
             </div>
         <?php
+        }
+
+
+        public function duogeek_panel_licenses_cb() {
+            ?>
+
+            <div class="wrap">
+
+            <?php
+
+            $ltabs = apply_filters( 'dg_pro_licenses', array() );
+
+            if( count( $ltabs ) < 1 ){
+                echo '<p>You don\'t have any pro version yet!</p>';
+            }else{
+                echo '<h2 class="nav-tab-wrapper">';
+                foreach( $ltabs as $ltab ){
+
+                    $active = '';
+                    if( ! isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == strtolower( str_replace( ' ', '_', $ltab ) ) ){
+                        $active = 'nav-tab-active';
+                    }
+
+                    echo '<a class="nav-tab '. $active .'" href="' . admin_url( 'admin.php?page=' . DUO_LICENSES_SLUG . '&tab=' . strtolower( str_replace( ' ', '_', $ltab ) ) ) . '">' . $ltab . '</a>';
+
+                }
+                echo '</h2>';
+
+                echo '<div class="lisence_wrap">';
+
+                $tab = strtolower( str_replace( ' ', '_', isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'knowledge_base' ) );
+
+                if( ! isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == $tab ){
+                    do_action( 'dg_pro_license_form_' . $tab );
+                }
+
+                echo '</div>';
+
+            }
+            ?>
+            </div>
+            <?php
+
+        }
+
+
+        public function dg_grid_cb( $atts, $content = '' ){
+            return '<div class="dg-grid dg-grid-shortcode">' . do_shortcode( $content ) . '</div>';
+        }
+
+        public function dg_grid_class_cb( $atts, $content = '' ){
+            $atts = shortcode_atts( array(
+                'desktop' => '1-1',
+                'ipad' => '1-1',
+                'ipad_mini' => '1-1',
+                'mobile' => '1-1'
+            ), $atts, 'dg_grid_class' );
+
+            return '<div class="dg_grid-shortcode-col dg-col-'. $atts['desktop'] .' dg-col-md-'. $atts['ipad'] .' dg-col-sm-'. $atts['ipad_mini'] .' dg-col-xx-'. $atts['mobile'] .'">' . do_shortcode( $content ) . '</div>';
+
+        }
+
+        public function dg_equal_column() {
+            ?>
+            <script type="text/javascript">
+                jQuery(function($) {
+                    function equalHeight(group) {
+                        tallest = 0;
+                        group.each(function() {
+                            thisHeight = $(this).height();
+                            if(thisHeight > tallest) {
+                                tallest = thisHeight;
+                            }
+                        });
+                        group.height(tallest);
+                    }
+
+                    equalHeight($(".dg-grid-shortcode .dg_grid-shortcode-col"));
+
+                    $(window).resize(function() {
+                        equalHeight($(".dg-grid-shortcode .dg_grid-shortcode-col"));
+                    });
+                });
+            </script>
+            <?php
         }
 
     }
