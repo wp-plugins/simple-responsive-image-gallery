@@ -1,0 +1,25 @@
+.dg_form {
+}
+.dg_form input, select, button {
+    background: none repeat scroll 0 0 #eeeeee;
+    border: 0px !important;
+    padding: 5px 10px;
+    margin-right: 5px;
+    color: #444444;
+}
+.dg_form th {
+    padding: 10px 0px;
+    border-bottom: 1px solid #eee;
+}
+.dg_form tr {
+    margin: 5px 0px;
+}
+.dg_form td {
+    text-align: center;
+    border-bottom: 1px solid #eeeeee;
+    height: 150px;
+}
+label {
+    color: #bbbbbb !important;
+    margin-right: 10px !important;
+}
