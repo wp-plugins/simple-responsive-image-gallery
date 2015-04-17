@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: simple, image, gallery, beautiful, awesome, easy, wordpress, photo
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,10 @@ For any issues, problem or query, please feel free to <a href="https://duogeek.c
 
 
 == Changelog ==
+
+= 1.0.5 =
+* Minor update
+* Improved: Performance
 
 = 1.0.2 =
 * Minor Changes

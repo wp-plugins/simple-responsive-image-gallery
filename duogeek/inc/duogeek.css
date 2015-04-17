@@ -68,3 +68,12 @@ body{
     background: none repeat scroll 0 0 #fff;
     padding: 20px;
 }
+
+.centerAlign{
+    text-align: center;
+}
+
+.star-icons, .star-icons a{
+    color: #e6b800;
+    text-decoration: none;
+}

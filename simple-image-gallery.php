@@ -3,7 +3,7 @@
   Plugin Name: Simple Image Gallery
   Plugin URI: http://duogeek.com
   Description: Most Beautiful and Most Simple WordPress Image Gallery Plugin
-  Version: 1.0.4
+  Version: 1.0.5
   Author: DuoGeek
   Author URI: http://duogeek.com
   License: GPL v2 or later
@@ -84,12 +84,26 @@ if ( !class_exists( 'DGImageGallery' ) ) {
             add_filter( 'manage_gallery_posts_columns', array($this, 'revealid_add_id_column'), 5 );
             add_action( 'manage_gallery_posts_custom_column', array($this, 'revealid_id_column_content'), 5, 2 );
 
-
-
             add_filter( 'duogeek_panel_pages', array($this, 'duogeek_panel_pages_gallery') );
             add_filter( 'duo_panel_help', array($this, 'duo_panel_help_cb') );
             add_action( 'wp_head', array($this, 'hook_front_css') );
+
+            register_activation_hook( __FILE__, array( $this, 'sig_plugin_activate' ) );
+            add_action( 'admin_init', array( $this, 'sig_plugin_redirect' ) );
+
             add_image_size( 'dg-gallery-img', 400, 250, true );
+        }
+
+        public function sig_plugin_activate() {
+            update_option( 'sig_plugin_do_activation_redirect', true );
+        }
+
+
+        public function sig_plugin_redirect() {
+            if ( get_option( 'sig_plugin_do_activation_redirect', false ) ) {
+                delete_option( 'sig_plugin_do_activation_redirect' );
+                wp_redirect( admin_url( DUO_SETTINGS_PAGE ) );
+            }
         }
 
         public function remove_image_box() {
@@ -417,56 +431,63 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                         <div id="message" class="<?php echo isset( $_REQUEST['duoaction'] ) ? $_REQUEST['duoaction'] : 'updated' ?> below-h2"><p><?php echo str_replace( '+', ' ', $_REQUEST['msg'] ) ?></p></div>
                     <?php } ?>
                     <div id="poststuff">
-                        <div class="postbox">
-                            <h3 class="hndle">Save your Option Value</h3>
-                            <div class="inside">
+                        <div id="post-body" class="metabox-holder columns-2">
+                            <div id="post-body-content">
+                                <div class="postbox">
+                                    <h3 class="hndle">Save your Option Value</h3>
+                                    <div class="inside">
 
-                                <?php wp_nonce_field( 'dg_gallery_nonce', 'dg_gallery_nonce_value' ); ?>
-                                <table class="form-table">
-                                    <tr>
-                                        <th>Initial Image Number</th>
-                                        <td>
-                                            <input type="text" name="options[imagenumber]" value="<?php echo isset( $options['options']['imagenumber'] ) && $options['options']['imagenumber'] != '' ? $options['options']['imagenumber'] : '' ?>">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Close Button on Mobile</th>
-                                        <td>
-                                            <select name="options[closebutton]">
-                                                <option value="true" <?php echo isset( $options['options']['closebutton'] ) && $options['options']['closebutton'] == 'true' ? 'selected' : '' ?>>True</option>
-                                                <option value="false" <?php echo isset( $options['options']['closebutton'] ) && $options['options']['closebutton'] == 'false' ? 'selected' : '' ?>>False</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Hide Bar Delay</th>
-                                        <td>
-                                            <input type="text" name="options[bardelay]" value="<?php echo isset( $options['options']['bardelay'] ) && $options['options']['bardelay'] != '' ? $options['options']['bardelay'] : '' ?>">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Loop at End</th>
-                                        <td>
-                                            <select name="options[loopatend]">
-                                                <option value="1" <?php echo isset( $options['options']['loopatend'] ) && $options['options']['loopatend'] == '1' ? 'selected' : '' ?>>True</option>
-                                                <option value="0" <?php echo isset( $options['options']['loopatend'] ) && $options['options']['loopatend'] == '0' ? 'selected' : '' ?>>False</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Image Border</th>
-                                        <td><input type="text" name="options[imageborder]" value="<?php echo isset( $options['options']['imageborder'] ) && $options['options']['imageborder'] != '' ? $options['options']['imageborder'] : '' ?>"> px</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Border Color</th>
-                                        <td><input type="text" name="options[bordercolor]" class="dg-color-field" value="<?php echo isset( $options['options']['bordercolor'] ) && $options['options']['bordercolor'] != '' ? $options['options']['bordercolor'] : '' ?>"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Frontend Image Width</th>
-                                        <td><input type="text" name="options[imagewidth]" value="<?php echo isset( $options['options']['imagewidth'] ) && $options['options']['imagewidth'] != '' ? $options['options']['imagewidth'] : '' ?>"> px</td>
-                                    </tr>
-                                </table>
-                                <p><input type="submit" class="button button-primary" name="gallery_option_save" value="Save Settings" style="width: 100px; text-aldgn: center;"></p>
+                                        <?php wp_nonce_field( 'dg_gallery_nonce', 'dg_gallery_nonce_value' ); ?>
+                                        <table class="form-table">
+                                            <tr>
+                                                <th>Initial Image Number</th>
+                                                <td>
+                                                    <input type="text" name="options[imagenumber]" value="<?php echo isset( $options['options']['imagenumber'] ) && $options['options']['imagenumber'] != '' ? $options['options']['imagenumber'] : '' ?>">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Close Button on Mobile</th>
+                                                <td>
+                                                    <select name="options[closebutton]">
+                                                        <option value="true" <?php echo isset( $options['options']['closebutton'] ) && $options['options']['closebutton'] == 'true' ? 'selected' : '' ?>>True</option>
+                                                        <option value="false" <?php echo isset( $options['options']['closebutton'] ) && $options['options']['closebutton'] == 'false' ? 'selected' : '' ?>>False</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Hide Bar Delay</th>
+                                                <td>
+                                                    <input type="text" name="options[bardelay]" value="<?php echo isset( $options['options']['bardelay'] ) && $options['options']['bardelay'] != '' ? $options['options']['bardelay'] : '' ?>">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Loop at End</th>
+                                                <td>
+                                                    <select name="options[loopatend]">
+                                                        <option value="1" <?php echo isset( $options['options']['loopatend'] ) && $options['options']['loopatend'] == '1' ? 'selected' : '' ?>>True</option>
+                                                        <option value="0" <?php echo isset( $options['options']['loopatend'] ) && $options['options']['loopatend'] == '0' ? 'selected' : '' ?>>False</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Image Border</th>
+                                                <td><input type="text" name="options[imageborder]" value="<?php echo isset( $options['options']['imageborder'] ) && $options['options']['imageborder'] != '' ? $options['options']['imageborder'] : '' ?>"> px</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Border Color</th>
+                                                <td><input type="text" name="options[bordercolor]" class="dg-color-field" value="<?php echo isset( $options['options']['bordercolor'] ) && $options['options']['bordercolor'] != '' ? $options['options']['bordercolor'] : '' ?>"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Frontend Image Width</th>
+                                                <td><input type="text" name="options[imagewidth]" value="<?php echo isset( $options['options']['imagewidth'] ) && $options['options']['imagewidth'] != '' ? $options['options']['imagewidth'] : '' ?>"> px</td>
+                                            </tr>
+                                        </table>
+                                        <p><input type="submit" class="button button-primary" name="gallery_option_save" value="Save Settings" style="width: 100px; text-aldgn: center;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="postbox-container" id="postbox-container-1">
+                                <?php do_action( 'dg_settings_sidebar', 'free', 'sig-free' ); ?>
                             </div>
                         </div>
                     </div>

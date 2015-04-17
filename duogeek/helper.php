@@ -116,6 +116,7 @@ function get_user_role() {
 
 
 
+
 /************************************* TEMPLATE FUNCTIONS *******************************************/
 
 if( ! function_exists( 'get_date_time_value' ) ) {
