@@ -3,38 +3,28 @@
   Plugin Name: Simple Image Gallery
   Plugin URI: http://duogeek.com
   Description: Most Beautiful and Most Simple WordPress Image Gallery Plugin
-  Version: 1.0.5
+  Version: 1.0.6
   Author: DuoGeek
   Author URI: http://duogeek.com
   License: GPL v2 or later
- */
+*/
 
-if ( !defined( 'ABSPATH' ) )
-    wp_die( __( 'Sorry cowboy! This is not your place!', 'sig' ) );
+if ( !defined( 'ABSPATH' ) ) wp_die( __( 'Sorry cowboy! This is not your place!', 'sig' ) );
 
-if ( !defined( 'DUO_PLUGIN_URI' ) )
-    define( 'DUO_PLUGIN_URI', plugin_dir_url( __FILE__ ) );
+if ( !defined( 'DUO_PLUGIN_URI' ) ) define( 'DUO_PLUGIN_URI', plugin_dir_url( __FILE__ ) );
 
 define( 'DG_GALLERY_VERSION', '1.0' );
 
 require 'duogeek/duogeek-panel.php';
 
-if ( !defined( 'DG_BRAND' ) )
-    define( 'DG_BRAND', 'Image Gallery Settings' );
-if ( !defined( 'DG_VERSION' ) )
-    define( 'DG_VERSION', '1.0' );
-if ( !defined( 'DG_PLUGIN_DIR' ) )
-    define( 'DG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-if ( !defined( 'DG_FILES_DIR' ) )
-    define( 'DG_FILES_DIR', DG_PLUGIN_DIR . 'gallery-files' );
-if ( !defined( 'DG_FILES_URI' ) )
-    define( 'DG_FILES_URI', plugin_dir_url( __FILE__ ) . 'gallery-files' );
-if ( !defined( 'DG_CLASSES_DIR' ) )
-    define( 'DG_CLASSES_DIR', DG_FILES_DIR . '/classes' );
-if ( !defined( 'DG_ADDONS_DIR' ) )
-    define( 'DG_ADDONS_DIR', DG_FILES_DIR . '/addons' );
-if ( !defined( 'DG_INCLUDES_DIR' ) )
-    define( 'DG_INCLUDES_DIR', DG_FILES_DIR . '/includes' );
+if ( !defined( 'DG_BRAND' ) ) define( 'DG_BRAND', 'Image Gallery Settings' );
+if ( !defined( 'DG_VERSION' ) ) define( 'DG_VERSION', '1.0' );
+if ( !defined( 'DG_PLUGIN_DIR' ) ) define( 'DG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+if ( !defined( 'DG_FILES_DIR' ) ) define( 'DG_FILES_DIR', DG_PLUGIN_DIR . 'gallery-files' );
+if ( !defined( 'DG_FILES_URI' ) ) define( 'DG_FILES_URI', plugin_dir_url( __FILE__ ) . 'gallery-files' );
+if ( !defined( 'DG_CLASSES_DIR' ) ) define( 'DG_CLASSES_DIR', DG_FILES_DIR . '/classes' );
+if ( !defined( 'DG_ADDONS_DIR' ) ) define( 'DG_ADDONS_DIR', DG_FILES_DIR . '/addons' );
+if ( !defined( 'DG_INCLUDES_DIR' ) ) define( 'DG_INCLUDES_DIR', DG_FILES_DIR . '/includes' );
 
 add_action( 'init', 'sig_localization' );
 
@@ -68,7 +58,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                 'name_admin_bar' => __( 'Gallery', 'sig' ),
                 'rewrite' => __( 'gallery', 'sig' ),
                 'supports' => array('title', 'thumbnail')
-            );
+                );
 
             parent::__construct( $this->post_type );
 
@@ -97,7 +87,6 @@ if ( !class_exists( 'DGImageGallery' ) ) {
         public function sig_plugin_activate() {
             update_option( 'sig_plugin_do_activation_redirect', true );
         }
-
 
         public function sig_plugin_redirect() {
             if ( get_option( 'sig_plugin_do_activation_redirect', false ) ) {
@@ -171,7 +160,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                 $data = array(
                     'url' => $_POST['gallery_meta_url'],
                     'caption' => $_POST['gallery_meta_caption']
-                );
+                    );
             }
 
             update_post_meta( $post_id, '_gallery_meta_value_key', $data );
@@ -189,6 +178,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                         <th>Image Title</th>
                         <th>Action</th>
                     </tr>
+                    <input type="button" class="add_new_image" value="Add Image" style="cursor: pointer; cursor: hand;">
                     <?php
                     if ( isset( $galleries['url'] ) && is_array( $galleries['url'] ) ) {
                         $i = 0;
@@ -205,8 +195,8 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                                     <input type="text" name="gallery_meta_caption[]" class="gallery_meta_caption wide" value="<?php echo $galleries['caption'][$i]; ?>">
                                 </td>
                                 <td>
-                                    <input type="button" name="gallery_meta_upload" class="gallery_meta_upload wide" value="Change">
-                                    <input type="button" name="gallery_meta_remove" class="gallery_meta_remove" value="Remove">
+                                    <input type="button" name="gallery_meta_upload" class="gallery_meta_upload wide" value="Change" style="cursor: pointer; cursor: hand;">
+                                    <input type="button" name="gallery_meta_remove" class="gallery_meta_remove" value="Remove" style="cursor: pointer; cursor: hand;">
                                 </td>
                             </tr>
                             <?php
@@ -222,15 +212,15 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                                 <input type="text" name="gallery_meta_caption[]" class="gallery_meta_caption wide" value="">
                             </td>
                             <td>
-                                <input type="button" name="gallery_meta_upload" class="gallery_meta_upload wide" value="Upload">
-                                <input type="button" name="gallery_meta_remove" class="gallery_meta_remove" value="Remove" style="display: none;">
+                                <input type="button" name="gallery_meta_upload" class="gallery_meta_upload wide" value="Upload" style="cursor: pointer; cursor: hand;">
+                                <input type="button" name="gallery_meta_remove" class="gallery_meta_remove" value="Remove" style="display: none; cursor: pointer; cursor: hand;">
                             </td>
                         </tr>
                         <?php
                     }
                     ?>
                 </table>
-                <input type="button" class="add_new_image" value="Add Image">
+
             </div>
             <?php
         }
@@ -241,7 +231,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                 array(
                     'name' => 'media',
                     'condition' => true
-                ),
+                    ),
                 array(
                     'name' => 'gallery-admin-js',
                     'src' => DG_FILES_URI . '/js/gallery-admin.js',
@@ -249,8 +239,8 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                     'version' => DG_GALLERY_VERSION,
                     'footer' => true,
                     'condition' => true
-                )
-            );
+                    )
+                );
 
             $styles = array(
                 array(
@@ -260,8 +250,8 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                     'version' => DUO_VERSION,
                     'media' => 'all',
                     'condition' => true
-                )
-            );
+                    )
+                );
 
             if ( !isset( $enq['scripts'] ) || !is_array( $enq['scripts'] ) )
                 $enq['scripts'] = array();
@@ -279,7 +269,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                 'closebutton' => false,
                 'bardelay' => 3000,
                 'loopatend' => false
-            );
+                );
             $options = get_option( 'dg_gallery_options', true );
             $args = wp_parse_args( $options['options'], $default );
             $scripts = array(
@@ -290,7 +280,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                     'version' => DG_GALLERY_VERSION,
                     'footer' => true,
                     'condition' => true
-                ),
+                    ),
                 array(
                     'name' => 'dg_gallery_front_sript',
                     'src' => DG_FILES_URI . '/js/gallery-front.js',
@@ -306,10 +296,10 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                             'closebutton' => $args['closebutton'],
                             'bardelay' => $args['bardelay'],
                             'loopatend' => $args['loopatend']
+                            )
                         )
                     )
-                )
-            );
+                );
 
             $styles = array(
                 array(
@@ -319,7 +309,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                     'version' => DG_GALLERY_VERSION,
                     'media' => 'all',
                     'condition' => true
-                ),
+                    ),
                 array(
                     'name' => 'dg_front_gallery_style',
                     'src' => DG_FILES_URI . '/css/dggallery.css',
@@ -327,8 +317,8 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                     'version' => DG_GALLERY_VERSION,
                     'media' => 'all',
                     'condition' => true
-                )
-            );
+                    )
+                );
 
             if ( !isset( $enq['scripts'] ) || !is_array( $enq['scripts'] ) )
                 $enq['scripts'] = array();
@@ -342,9 +332,9 @@ if ( !class_exists( 'DGImageGallery' ) ) {
 
         public function show_gallery_data( $atts ) {
             $atts = shortcode_atts(
-                    array(
-                'gallery_id' => '',
-                'title' => 'Image Gallery',
+                array(
+                    'gallery_id' => '',
+                    'title' => 'Image Gallery',
                     ), $atts, 'dg_gallery' );
 
             $galleries = get_post_meta( $atts['gallery_id'], '_gallery_meta_value_key', true );
@@ -355,7 +345,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                     $image_attributes = wp_get_attachment_image_src( $galleries['url'][$i], 'dg-gallery-img' );
                     $image_attributes_full = wp_get_attachment_image_src( $galleries['url'][$i], 'full' );
 
-                    $content .= '<a rel="gallery" href="' . $image_attributes_full[0] . '" class="swipebox dgsig" title="' . $galleries['caption'][$i] . '"><img src="' . $image_attributes[0] . '" alt="' . $galleries['caption'][$i] . '"></a>';
+                    $content .= '<a rel="gallery" href="' . $image_attributes_full[0] . '" class="swipebox dgsig" title="' . $galleries['caption'][$i] . '"><img src="' . $image_attributes[0] . '" alt="' . $galleries['caption'][$i] . '"><span class="title">' . $galleries['caption'][$i] . '</span></a>';
                     $i++;
                 }
             }
@@ -379,7 +369,7 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                 'slug' => 'duogallery-settings',
                 'object' => $this,
                 'function' => 'duogallery_settings_page'
-            );
+                );
 
             return $submenus;
         }
@@ -422,13 +412,13 @@ if ( !class_exists( 'DGImageGallery' ) ) {
             }
 
             $options = get_option( 'dg_gallery_options', true );
-            //var_dump($options);
+                    //var_dump($options);
             ?>
             <form action="<?php echo admin_url( 'admin.php?page=duogallery-settings&noheader=true' ) ?>" method="post">
                 <div class="wrap duo_prod_panel">
                     <h2><?php _e( 'Gallery Settings' ) ?></h2>
                     <?php if ( isset( $_REQUEST['msg'] ) ) { ?>
-                        <div id="message" class="<?php echo isset( $_REQUEST['duoaction'] ) ? $_REQUEST['duoaction'] : 'updated' ?> below-h2"><p><?php echo str_replace( '+', ' ', $_REQUEST['msg'] ) ?></p></div>
+                    <div id="message" class="<?php echo isset( $_REQUEST['duoaction'] ) ? $_REQUEST['duoaction'] : 'updated' ?> below-h2"><p><?php echo str_replace( '+', ' ', $_REQUEST['msg'] ) ?></p></div>
                     <?php } ?>
                     <div id="poststuff">
                         <div id="post-body" class="metabox-holder columns-2">
@@ -506,9 +496,9 @@ if ( !class_exists( 'DGImageGallery' ) ) {
                         'example' => '[dg_gallery gallery_id="GALLERY ID" title="ANY TITLE"]',
                         'default' => 'title = "Image Gallery"',
                         'desc' => __( 'This shortcode will show the Image Gallery. You need to give the gallery ID, either it can\'t show you any gallery.', 'sig' )
-                    ),
-                )
-            );
+                        ),
+                    )
+                );
 
             return $arr;
         }

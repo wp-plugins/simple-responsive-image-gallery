@@ -35,7 +35,7 @@ if( ! class_exists( 'customPostType' ) ) {
 			$labels = array(
 				'name'               => $this->custom_post_type['name'],
 				'singular_name'      => $this->custom_post_type['singular_name'],
-				'menu_name'          => $this->custom_post_type['menu_name'],
+				'menu_name'          => apply_filters( 'duo_change_'. $this->custom_post_type['post_type'] .'_menu_name', $this->custom_post_type['menu_name'] ),
 				'name_admin_bar'     => $this->custom_post_type['name_admin_bar'],
 				'add_new'            => $this->custom_post_type['add_new'],
 				'add_new_item'       => $this->custom_post_type['add_new_item'],

@@ -71,10 +71,46 @@ if( ! class_exists( 'DuoGeekPlugins' ) ){
 
             $this->donate['sig-free'] = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="BV9LLJ8GVH6S4"><input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"></form>';
 
+            $this->donate['ecab-free'] = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="9M5XDLDSSNK5U">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+';
+            $this->donate['ccdw-free'] = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="FPRWA8TLD2ATE">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+';
+            $this->donate['cam-free'] = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="6A5XM274KPAVA">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+';
+            $this->donate['ecl-free'] = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="RHMKC3R8ETV7Y">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+';
+
+
+
             $this->rating['faq-free'] = 'https://wordpress.org/support/view/plugin-reviews/duofaq-responsive-flat-simple-faq';
             $this->rating['dr-free'] = 'https://wordpress.org/support/view/plugin-reviews/domain-replace';
             $this->rating['saa-free'] = 'https://wordpress.org/support/view/plugin-reviews/simple-amazon-affiliate';
             $this->rating['sig-free'] = 'https://wordpress.org/support/view/plugin-reviews/simple-responsive-image-gallery';
+            
+            $this->rating['ecab-free'] = 'https://wordpress.org/support/view/plugin-reviews/easy-custom-admin-bar';
+            $this->rating['ccdw-free'] = 'https://wordpress.org/support/view/plugin-reviews/create-custom-dashboard-widget';
+            $this->rating['cam-free'] = 'https://wordpress.org/support/view/plugin-reviews/custom-admin-menu';
+            $this->rating['ecl-free'] = 'https://wordpress.org/support/view/plugin-reviews/easy-custom-login';
 
 
 
@@ -341,7 +377,8 @@ if( ! class_exists( 'DuoGeekPlugins' ) ){
 
             }
 
-            $promo_content = wp_remote_get( 'http://duogeek.com/duo-promo.html' );
+            $protocol = is_ssl() ? 'https://' : 'http://';
+            $promo_content = wp_remote_get( $protocol . 'duogeek.com/duo-promo.html' );
 
             ?>
             <div class="wrap duo_prod_panel">
